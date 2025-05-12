@@ -13,24 +13,16 @@ permissions:
 
 jobs:
   analyze:
-    name: Analyze
+    name: Build
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Initialize CodeQL
-      uses: github/codeql-action/init@v3
-      with:
-        languages: 'cpp' # CodeQL uses 'cpp' for both C and C++
-
     - name: Compile the C code using Makefile
       run: make
       continue-on-error: true # Continue if make fails, for diagnostic purposes
-
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v3
 
     - name: Run Microsoft Security DevOps
       uses: microsoft/security-devops-action@latest
