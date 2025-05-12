@@ -1,12 +1,10 @@
-name: "CodeQL"
+name: Build
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-  schedule:
-    - cron: '36 2 * * 2'
+    branches:
+      - master
+  workflow_dispatch:
 
 permissions:
   actions: read
@@ -23,7 +21,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: 'cpp' # CodeQL uses 'cpp' for both C and C++
 
@@ -32,4 +30,8 @@ jobs:
       continue-on-error: true # Continue if make fails, for diagnostic purposes
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
+
+    - name: Run Microsoft Security DevOps
+      uses: microsoft/security-devops-action@latest
+      id: msdo
